@@ -20,7 +20,7 @@ function Login({ navigation }) {
                 onPress={() => {navigation.navigate('Main', { email })}}
                 style={styles.button}
             >
-                <Text style={styles.buttonText} >Entrar</Text>
+                <Text style={styles.buttonText} > Entrar </Text>
             </TouchableOpacity>
         </View>
     )

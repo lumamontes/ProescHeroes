@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image,Text, StyleSheet} from 'react-native';
+import { View, Image,Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import api from '../services/api'
+import { useNavigation, NavigationContainer} from '@react-navigation/native'
+import {createStackNavigator} from '@react-navigation/stack'
 
 
-function Main() {
+function Main({navigation}) {
     const[devs, setDevs] = useState ({});
 
     async function loadDevs() {
@@ -21,15 +23,29 @@ function Main() {
             <FlatList
                 data={devs}
                 keyExtractor={dev => String(dev.id)}
+                showsVerticalScrollIndicator={false}
                 renderItem={({item: dev}) => (
             <View style={styles.container}>
                 <Image style={styles.avatar} source={{ uri: dev.photo }}></Image>
                 <Text style={styles.name}>{dev.name}</Text>
                 <Text style={styles.class}>{dev.class}</Text>
+
+                <TouchableOpacity 
+                onPress={() => {navigation.navigate('Profile',{ name: dev.name, class: dev.class, photo: dev.photo  })}}
+                style={styles.button}
+            >
+                <Text style={styles.buttonText} > Ver perfil </Text>
+            </TouchableOpacity>
+
             </View>
             )}
             >
+                
+
                 </FlatList>
+
+                
+
         </View>
     )
 }
@@ -39,29 +55,49 @@ const styles = StyleSheet.create({
         height:90,
         borderRadius:50,
         borderWidth:1,
-        borderColor: '#004e74'
+        borderColor: '#DBDBDB'
 
     },
 
     container: {
         flex:1,
-        backgroundColor:'#f5f5f5',
+        backgroundColor:'#323232',
         justifyContent:'center',
         alignItems:'center',
         padding:30
     },
 
     name: {
-        color: '#000a',
+        color: '#DBDBDB',
         fontSize: 16,
         padding:4
     },
     class: {
         color:'#66bc50',
         fontWeight: 'bold',
-        fontSize:12
+        fontSize:13
     },
 
+    button: {
+        height: 40,
+        width: 150,
+        alignSelf: 'center',
+        backgroundColor: '#66BA74',
+        borderRadius: 4, 
+        marginTop: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: '#DBDBDB',
+        borderWidth: 1,
+            
+
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 16
+        
+    }
 
 })
 
